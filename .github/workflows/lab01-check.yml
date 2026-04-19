@@ -1,0 +1,56 @@
+name: Lab 01 Auto Check
+
+on: [push]
+
+jobs:
+  check-lab:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check if index.html exists
+        run: |
+          if [ -f index.html ]; then
+            echo "index.html found ✅"
+          else
+            echo "index.html missing ❌"
+            exit 1
+          fi
+
+      - name: Check Bootstrap CDN
+        run: |
+          if grep -qi "bootstrap" index.html; then
+            echo "Bootstrap detected ✅"
+          else
+            echo "Bootstrap not found ❌"
+            exit 1
+          fi
+
+      - name: Check for button
+        run: |
+          if grep -qi "<button" index.html; then
+            echo "Button found ✅"
+          else
+            echo "Button missing ❌"
+            exit 1
+          fi
+
+      - name: Check for card component
+        run: |
+          if grep -qi "card" index.html; then
+            echo "Card component found ✅"
+          else
+            echo "Card component missing ❌"
+            exit 1
+          fi
+
+      - name: Check for grid layout
+        run: |
+          if grep -qi "row" index.html; then
+            echo "Grid layout found ✅"
+          else
+            echo "Grid layout missing ❌"
+            exit 1
+          fi
